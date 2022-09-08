@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/blogweb
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    druid:
+      # 内置监控页面
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: admin
+
+      # web关联监控
+      web-stat-filter:
+        enabled: true
+
+      # spring关联监控
+      aop-patterns: com.zzhhsy.blogweb.*
+
+      # 配置filter
+      filter:
+        # 监控统计功能
+        stat:
+          enabled: true
+          slow-sql-millis: 1000
+          log-slow-sql: true
+
+        # 防火墙功能
+        wall:
+          enabled: true
+          config:
+            drop-table-allow: false
+
