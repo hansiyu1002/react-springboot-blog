@@ -1,11 +1,17 @@
 package com.zzhhsy.blogweb.config;
 
+import com.zzhhsy.blogweb.interceptor.LoginInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+    @Autowired
+    private LoginInterceptor loginInterceptor;
+
     /*
     * 跨域配置
     * */
@@ -13,5 +19,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000");
+    }
+
+    /*
+    * 登录拦截器
+    * */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(loginInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/login", "/signup");
     }
 }
