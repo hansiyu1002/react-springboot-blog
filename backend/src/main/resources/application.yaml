@@ -33,3 +33,6 @@ spring:
           config:
             drop-table-allow: false
 
+  redis:
+    host: localhost
+    port: 6379
