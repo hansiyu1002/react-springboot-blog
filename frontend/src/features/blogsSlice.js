@@ -8,7 +8,7 @@ export const blogsSlice = createSlice({
     initialState,
     extraReducers: builder => {
         builder.addMatcher(apiSlice.endpoints.getMyBlogs.matchFulfilled, (state, { payload }) => {
-            return payload;
+            return payload.data;
         });
         builder.addMatcher(apiSlice.endpoints.logoutUser.matchFulfilled, () => {
             return {};

@@ -3,15 +3,12 @@ import { apiSlice } from '../services/apiSlice';
 
 const initialState = {}
 
-export const userSlice = createSlice({
-    name: 'user',
+export const accountSlice = createSlice({
+    name: 'account',
     initialState,
     extraReducers: (builder) => {
-        builder.addMatcher(apiSlice.endpoints.signupUser.matchFulfilled, (state, { payload }) => {
-            return payload;
-        });
         builder.addMatcher(apiSlice.endpoints.loginUser.matchFulfilled, (state, { payload }) => {
-            return payload;
+            return payload.data;
         });
         builder.addMatcher(apiSlice.endpoints.logoutUser.matchFulfilled, (state) => {
             return {};
@@ -19,4 +16,4 @@ export const userSlice = createSlice({
     }
 })
 
-export default userSlice.reducer
+export default accountSlice.reducer
