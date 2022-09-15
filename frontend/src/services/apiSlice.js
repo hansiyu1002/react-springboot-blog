@@ -3,82 +3,82 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8000',
+        baseUrl: 'http://localhost:8080',
         prepareHeaders: (headers, { getState }) => {
-            const token = getState().user.token;
+            const token = getState().account.token;
             if(token) {
-                headers.set('Authorization', `Bearer ${token}`);
+                headers.set('Authorization', `${token}`);
             }
             return headers;
         }
     }),
-    tagTypes: ['Blog'],
+    keepUnusedDataFor: 10,
+    tagTypes: ['Blogs'],
     endpoints: (builder) => ({
         loginUser: builder.mutation({
             query: (user) => ({
-                url: '/user/login',
+                url: '/login',
                 method: 'POST',
                 body: user
-            }),
-            invalidatesTags: ['Blog']
+            })
         }),
         signupUser: builder.mutation({
             query: (user) => ({
-                url: '/user/signup',
+                url: '/signup',
                 method: 'POST',
                 body: user
-            }),
-            invalidatesTags: ['Blog']
+            })
         }),
         logoutUser: builder.mutation({
             query: () => ({
-                url: '/user/logout',
+                url: '/logout',
                 method: 'DELETE'
-            })
+            }),
+            invalidatesTags: ['Blogs']
         }),
         createBlog: builder.mutation({
             query: (blog) => ({
-                url: '/blog/post',
+                url: '/article/post',
                 method: 'POST',
                 body: blog
             }),
-            invalidatesTags: ['Blog']
+            invalidatesTags: ['Blogs']
         }),
+        //getOneBlog not used
         getOneBlog: builder.query({
             query: (id) => ({
-                url: `/blog/${id}`
-            }),
-            providesTags: ['Blog']
-        }),
-        getMyBlogs: builder.query({
-            query: () => ({
-                url: '/blog/mine'
-            }),
-            providesTags: ['Blog']
+                url: `/article/${id}`
+            })
         }),
         // getAllBlogs not used
         getAllBlogs: builder.query({
             query: () => ({
-                url: '/blog/all'
+                url: '/article/all'
+            })
+        }),
+        getMyBlogs: builder.query({
+            query: () => ({
+                url: '/article/mine'
             }),
-            providesTags: ['Blog']
+            providesTags: ['Blogs']
         }),
         deleteBlog: builder.mutation({
             query: (id) => ({
-                url: `/blog/${id}`,
+                url: `/article/${id}`,
                 method: 'DELETE'
             }),
-            invalidatesTags: ['Blog']
+            invalidatesTags: ['Blogs']
         }),
         updateBlog: builder.mutation({
             query: ({id, title, content}) => ({
-                url: `/blog/${id}`,
+                url: `/article/${id}`,
                 method: 'PATCH',
                 body: {title, content}
             }),
-            invalidatesTags: ['Blog']
+            invalidatesTags: ['Blogs']
         })
     })
 });
 
-export const { useLoginUserMutation, useSignupUserMutation, useLogoutUserMutation , useCreateBlogMutation, useGetAllBlogsQuery, useGetOneBlogQuery, useGetMyBlogsQuery, useDeleteBlogMutation, useUpdateBlogMutation } = apiSlice;
+export const { useLoginUserMutation, useSignupUserMutation, useLogoutUserMutation ,
+    useCreateBlogMutation, useGetMyBlogsQuery, useDeleteBlogMutation, useUpdateBlogMutation } = apiSlice;
