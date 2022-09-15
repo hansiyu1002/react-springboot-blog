@@ -1,6 +1,7 @@
 package com.zzhhsy.blogweb.service.impl;
 
-import com.alibaba.fastjson2.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zzhhsy.blogweb.dao.pojo.User;
 import com.zzhhsy.blogweb.service.TokenService;
 import com.zzhhsy.blogweb.utils.JWTUtils;
@@ -26,6 +27,13 @@ public class TokenServiceImpl implements TokenService {
         if (StringUtils.isBlank(userJson)) {
             return null;
         }
-        return JSON.parseObject(userJson, User.class);
+        ObjectMapper mapper = new ObjectMapper();
+        User user = null;
+        try {
+            user = mapper.readValue(userJson, User.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }
