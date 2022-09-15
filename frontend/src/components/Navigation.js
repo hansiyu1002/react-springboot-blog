@@ -6,7 +6,7 @@ import { useLogoutUserMutation } from '../services/apiSlice';
 import {useNavigate} from "react-router-dom";
 
 function Navigation() {
-    const { user } = useSelector(state => state.user);
+    const { email: user } = useSelector(state => state.account);
     const [logoutUser] = useLogoutUserMutation();
     const navigate = useNavigate();
 
@@ -32,7 +32,7 @@ function Navigation() {
                             </LinkContainer>
                         )}
                         {user && (
-                            <NavDropdown title={user.email} id="basic-nav-dropdown">
+                            <NavDropdown title={user} id="basic-nav-dropdown">
                                 <LinkContainer to="/new_blog">
                                     <NavDropdown.Item>New Blog</NavDropdown.Item>
                                 </LinkContainer>

@@ -1,34 +1,23 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useGetOneBlogQuery } from '../services/apiSlice';
-import {Container, Row, Col, Spinner} from "react-bootstrap";
+import {Container, Row, Col, Spinner, Button} from "react-bootstrap";
+import {LinkContainer} from "react-router-bootstrap";
+import {useSelector} from "react-redux";
 
 function SingleBlog() {
     const { id } = useParams();
-    const { data: blog, isLoading, isError } = useGetOneBlogQuery(id);
-
-    if (isError) {
-        return (
-            <div className="d-flex justify-content-center py-5">
-                <h1 className="text-center">An error has occurred</h1>
-            </div>
-        );
-    }
-
-    if (isLoading) {
-        return (
-            <div className="d-flex justify-content-center py-5">
-                <Spinner animation="border" />
-            </div>
-        );
-    }
+    const blogs = useSelector(state => state.blogs);
+    const blog = blogs.find(blog => blog.id === id);
 
     return (
         <Container>
             <Row>
                 <Col>
+                    <LinkContainer to={"/my_blogs"}>
+                        <Button variant="primary">Back</Button>
+                    </LinkContainer>
                     <h1>{blog.title}</h1>
-                    <p>By {blog.author.email}</p>
+                    <p>By {blog.author}</p>
                     <div dangerouslySetInnerHTML={{ __html: blog.content }} />
                 </Col>
             </Row>

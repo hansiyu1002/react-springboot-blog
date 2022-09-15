@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
-import { Button, Container, Form } from "react-bootstrap";
-import { useUpdateBlogMutation } from '../services/apiSlice';
+import {Button, Container, Form, Spinner} from "react-bootstrap";
+import {useUpdateBlogMutation} from '../services/apiSlice';
 import { MenuBar } from '../components/MenuBar';
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import {LinkContainer} from "react-router-bootstrap";
+import {useSelector} from "react-redux";
 
 function EditBlog() {
     const { id } = useParams();
-    const blogs = useSelector(state => state.blogs);
-    const blog = blogs.find(blog => blog._id === id)
-    const [title, setTitle] = useState(blog.title);
-    const [updateBlog, { isSuccess }] = useUpdateBlogMutation();
     const navigate = useNavigate();
-
+    const blogs = useSelector(state => state.blogs);
+    const blog = blogs.find(blog => blog.id === id);
+    const [title, setTitle] = useState(blog.title);
     const editor = useEditor({
         extensions: [
             StarterKit,
         ],
         content: `${blog.content}`,
         autofocus: true
-    })
+    });
+    const [updateBlog, { isSuccess }] = useUpdateBlogMutation();
+
 
     function handleEdit(e) {
         e.preventDefault();
@@ -45,6 +46,9 @@ function EditBlog() {
 
     return (
         <Container>
+            <LinkContainer to={"/my_blogs"}>
+                <Button variant="primary">Back</Button>
+            </LinkContainer>
             <Form onSubmit={handleEdit}>
                 <h2 className="text-center">Edit Blog</h2>
                 <Form.Group className="mb-3">

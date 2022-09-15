@@ -7,7 +7,7 @@ import StarterKit from "@tiptap/starter-kit";
 import { useNavigate } from "react-router-dom";
 
 function NewBlog() {
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState('');
     const [ createBlog, { isSuccess } ] = useCreateBlogMutation();
     const navigate = useNavigate();
 
