@@ -1,6 +1,5 @@
 package com.zzhhsy.blogweb.service.impl;
 
-import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zzhhsy.blogweb.dao.mapper.UserMapper;
 import com.zzhhsy.blogweb.dao.pojo.User;
@@ -32,6 +31,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserById(Long id) {
+        return userMapper.selectById(id);
+    }
+
+    @Override
     public User getUserByEmail(String email) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getEmail, email);
@@ -43,14 +47,5 @@ public class UserServiceImpl implements UserService {
     public void saveUser(User user) {
         //默认使用雪花算法分配id
         userMapper.insert(user);
-    }
-
-    @Override
-    public Result getUserByToken(String token) {
-        User user = tokenService.auth(token);
-        if (user == null) {
-            return Result.fail(ErrorCode.TOKEN_ILLEGAL.getCode(), ErrorCode.TOKEN_ILLEGAL.getMsg());
-        }
-        return Result.success(user);
     }
 }
