@@ -1,14 +1,12 @@
 package com.zzhhsy.blogweb.interceptor;
 
-import com.alibaba.fastjson2.JSON;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zzhhsy.blogweb.dao.pojo.User;
 import com.zzhhsy.blogweb.service.TokenService;
 import com.zzhhsy.blogweb.utils.UserThreadLocal;
 import com.zzhhsy.blogweb.vo.ErrorCode;
 import com.zzhhsy.blogweb.vo.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.el.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -25,7 +23,10 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (handler instanceof HandlerMethod) {
+        if (!(handler instanceof HandlerMethod)) {
+            return true;
+        }
+        if ("OPTIONS".equals(request.getMethod())) {
             return true;
         }
         String token = request.getHeader("Authorization");
@@ -40,7 +41,9 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (user == null) {
             Result result = Result.fail(ErrorCode.ACCESS_DENIED.getCode(), ErrorCode.ACCESS_DENIED.getMsg());
             response.setContentType("application/json");
-            response.getWriter().write(JSON.toJSONString(result));
+            ObjectMapper mapper = new ObjectMapper();
+            String resultJson = mapper.writeValueAsString(result);
+            response.getWriter().write(resultJson);
             return false;
         }
         UserThreadLocal.set(user);
