@@ -1,10 +1,12 @@
 package com.zzhhsy.blogweb.service.impl;
 
-import com.alibaba.fastjson2.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zzhhsy.blogweb.dao.pojo.User;
 import com.zzhhsy.blogweb.service.AccountService;
 import com.zzhhsy.blogweb.service.UserService;
 import com.zzhhsy.blogweb.utils.JWTUtils;
+import com.zzhhsy.blogweb.vo.AccountVo;
 import com.zzhhsy.blogweb.vo.ErrorCode;
 import com.zzhhsy.blogweb.vo.AccountParam;
 import com.zzhhsy.blogweb.vo.Result;
@@ -35,9 +37,8 @@ public class AccountServiceImpl implements AccountService {
         if (user == null) {
             return Result.fail(ErrorCode.ACCOUNT_PWD_ERROR.getCode(), ErrorCode.ACCOUNT_PWD_ERROR.getMsg());
         }
-        String token = JWTUtils.createToken(user.getId());
-        redisTemplate.opsForValue().set(token, JSON.toJSONString(user), 1, TimeUnit.DAYS);
-        return Result.success(token);
+        AccountVo accountState = createAccountState(user);
+        return Result.success(accountState);
     }
 
     @Override
@@ -55,14 +56,29 @@ public class AccountServiceImpl implements AccountService {
         user.setEmail(email);
         user.setPassword(DigestUtils.md5Hex(password));
         userService.saveUser(user);
-        String token = JWTUtils.createToken(user.getId());
-        redisTemplate.opsForValue().set(token, JSON.toJSONString(user), 1, TimeUnit.DAYS);
-        return Result.success(token);
+        AccountVo accountState = createAccountState(user);
+        return Result.success(accountState);
     }
 
     @Override
     public Result logout(String token) {
         redisTemplate.delete(token);
         return Result.success(null);
+    }
+
+    private AccountVo createAccountState(User user) {
+        String token = JWTUtils.createToken(user.getId());
+        ObjectMapper mapper = new ObjectMapper();
+        String userJson = null;
+        try {
+            userJson = mapper.writeValueAsString(user);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        redisTemplate.opsForValue().set(token, userJson, 1, TimeUnit.DAYS);
+        AccountVo accountVo = new AccountVo();
+        accountVo.setToken(token);
+        accountVo.setEmail(user.getEmail());
+        return accountVo;
     }
 }
