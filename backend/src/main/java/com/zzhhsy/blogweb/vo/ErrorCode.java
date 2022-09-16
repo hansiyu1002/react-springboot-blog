@@ -1,11 +1,11 @@
 package com.zzhhsy.blogweb.vo;
 
 public enum ErrorCode {
-    SERVER_ERROR(9999, "服务器错误"),
-    PARAM_ERROR(1000, "参数错误"),
-    ACCOUNT_PWD_ERROR(2000, "用户名或密码错误"),
-    ACCOUNT_ALREADY_EXIST(3000, "该邮箱已注册"),
-    ACCESS_DENIED(4000, "未登录");
+    SERVER_ERROR(9999, "Server Error"),
+    PARAM_ERROR(1000, "Parameter Error"),
+    ACCOUNT_PWD_ERROR(2000, "Account / Password Error"),
+    ACCOUNT_ALREADY_EXIST(3000, "Account Already Exist"),
+    ACCESS_DENIED(4000, "Not Login");
 
     private int code;
     private String msg;
