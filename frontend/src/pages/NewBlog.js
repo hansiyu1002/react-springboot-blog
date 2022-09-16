@@ -49,7 +49,6 @@ function NewBlog() {
                 <br/>
 
                 <div>
-                    <MenuBar editor={editor} />
                     <EditorContent editor={editor} />
                 </div>
 

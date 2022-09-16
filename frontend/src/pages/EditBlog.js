@@ -58,7 +58,6 @@ function EditBlog() {
                 <br/>
 
                 <div>
-                    <MenuBar editor={editor} />
                     <EditorContent editor={editor} />
                 </div>
 
