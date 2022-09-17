@@ -31,11 +31,11 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         String token = request.getHeader("Authorization");
 
-        log.info("----------------------------------------");
+        log.info("--------------------LoginInterceptor--------------------");
         log.info("request uri: {}", request.getRequestURI());
         log.info("request method: {}", request.getMethod());
-        log.info("token: ", token);
-        log.info("----------------------------------------");
+        log.info("token: {}", token);
+        log.info("--------------------LoginInterceptor--------------------");
 
         User user = tokenService.auth(token);
         if (user == null) {
@@ -51,7 +51,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         //防止ThreadLocal内存泄漏
         UserThreadLocal.remove();
     }
