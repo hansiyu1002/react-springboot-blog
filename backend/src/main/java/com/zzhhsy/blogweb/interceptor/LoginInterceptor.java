@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor implements HandlerInterceptor {
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -41,8 +43,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (user == null) {
             Result result = Result.fail(ErrorCode.ACCESS_DENIED.getCode(), ErrorCode.ACCESS_DENIED.getMsg());
             response.setContentType("application/json");
-            ObjectMapper mapper = new ObjectMapper();
-            String resultJson = mapper.writeValueAsString(result);
+            String resultJson = objectMapper.writeValueAsString(result);
             response.getWriter().write(resultJson);
             return false;
         }

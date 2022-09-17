@@ -6,12 +6,16 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
 @Slf4j
 public class LogAspect {
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Pointcut("execution(* com.zzhhsy.blogweb.controller.*.*(..))")
     public void pointcut() {}
 
@@ -27,8 +31,7 @@ public class LogAspect {
         log.info("method: {}", className + "." + methodName);
 
         Object[] args = joinPoint.getArgs();
-        ObjectMapper mapper = new ObjectMapper();
-        String argsJson = mapper.writeValueAsString(args);
+        String argsJson = objectMapper.writeValueAsString(args);
         log.info("params: {}", argsJson);
 
         log.info("execution time: {} ms", end - start);

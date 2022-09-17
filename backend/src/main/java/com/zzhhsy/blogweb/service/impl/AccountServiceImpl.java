@@ -24,6 +24,8 @@ public class AccountServiceImpl implements AccountService {
     private UserService userService;
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
     public Result login(AccountParam accountParam) {
@@ -68,10 +70,9 @@ public class AccountServiceImpl implements AccountService {
 
     private AccountVo createAccountState(User user) {
         String token = JWTUtils.createToken(user.getId());
-        ObjectMapper mapper = new ObjectMapper();
         String userJson = null;
         try {
-            userJson = mapper.writeValueAsString(user);
+            userJson = objectMapper.writeValueAsString(user);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
