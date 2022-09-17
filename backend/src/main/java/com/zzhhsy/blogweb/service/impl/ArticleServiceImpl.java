@@ -57,8 +57,6 @@ public class ArticleServiceImpl implements ArticleService {
         articleContent.setContent(articleParam.getContent());
         articleContent.setArticleId(article.getId());
         articleContentMapper.insert(articleContent);
-        article.setContentId(articleContent.getId());
-        articleMapper.updateById(article);
         return Result.success(article.getId());
     }
 
@@ -89,8 +87,10 @@ public class ArticleServiceImpl implements ArticleService {
         BeanUtils.copyProperties(article, articleVo);
         Long authorId = article.getAuthorId();
         articleVo.setAuthor(userService.getUserById(authorId).getEmail());
-        Long contentId = article.getContentId();
-        articleVo.setContent(articleContentMapper.selectById(contentId).getContent());
+        Long id = article.getId();
+        LambdaQueryWrapper<ArticleContent> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ArticleContent::getArticleId, id);
+        articleVo.setContent(articleContentMapper.selectOne(queryWrapper).getContent());
         return articleVo;
     }
 
