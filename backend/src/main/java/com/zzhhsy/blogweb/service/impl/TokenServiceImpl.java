@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 public class TokenServiceImpl implements TokenService {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
     public User auth(String token) {
@@ -27,10 +29,9 @@ public class TokenServiceImpl implements TokenService {
         if (StringUtils.isBlank(userJson)) {
             return null;
         }
-        ObjectMapper mapper = new ObjectMapper();
         User user = null;
         try {
-            user = mapper.readValue(userJson, User.class);
+            user = objectMapper.readValue(userJson, User.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
