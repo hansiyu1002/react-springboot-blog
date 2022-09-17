@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getEmail, email);
         queryWrapper.eq(User::getPassword, password);
-        queryWrapper.select(User::getId, User::getEmail);
+        queryWrapper.select(User::getId, User::getEmail, User::getPassword);
         queryWrapper.last("limit 1");
         return userMapper.selectOne(queryWrapper);
     }
