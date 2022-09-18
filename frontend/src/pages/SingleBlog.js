@@ -6,6 +6,7 @@ import {useSelector} from "react-redux";
 
 function SingleBlog() {
     const { id } = useParams();
+    const user = useSelector(state => state.account.email);
     const blogs = useSelector(state => state.blogs);
     const blog = blogs.find(blog => blog.id === id);
 
@@ -13,9 +14,10 @@ function SingleBlog() {
         <Container>
             <Row>
                 <Col>
-                    <LinkContainer to={"/my_blogs"}>
+                    {blog.author === user  && <LinkContainer to={"/my_blogs"}>
                         <Button variant="primary">Back</Button>
-                    </LinkContainer>
+                        </LinkContainer>
+                    }
                     <h1>{blog.title}</h1>
                     <p>By {blog.author}</p>
                     <div dangerouslySetInnerHTML={{ __html: blog.content }} />

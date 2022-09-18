@@ -36,14 +36,6 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['Blogs']
         }),
-        createBlog: builder.mutation({
-            query: (blog) => ({
-                url: '/article/post',
-                method: 'POST',
-                body: blog
-            }),
-            invalidatesTags: ['Blogs']
-        }),
         //getOneBlog not used
         getOneBlog: builder.query({
             query: (id) => ({
@@ -56,11 +48,25 @@ export const apiSlice = createApi({
                 url: '/article/all'
             })
         }),
+        getHotBlogs: builder.query({
+            query: () => ({
+                url: '/article/hot'
+            }),
+            providesTags: ['Blogs']
+        }),
         getMyBlogs: builder.query({
             query: () => ({
                 url: '/article/mine'
             }),
             providesTags: ['Blogs']
+        }),
+        createBlog: builder.mutation({
+            query: (blog) => ({
+                url: '/article/post',
+                method: 'POST',
+                body: blog
+            }),
+            invalidatesTags: ['Blogs']
         }),
         deleteBlog: builder.mutation({
             query: (id) => ({
@@ -80,5 +86,12 @@ export const apiSlice = createApi({
     })
 });
 
-export const { useLoginUserMutation, useSignupUserMutation, useLogoutUserMutation ,
-    useCreateBlogMutation, useGetMyBlogsQuery, useDeleteBlogMutation, useUpdateBlogMutation } = apiSlice;
+export const {
+    useLoginUserMutation,
+    useSignupUserMutation,
+    useLogoutUserMutation,
+    useGetHotBlogsQuery,
+    useGetMyBlogsQuery,
+    useCreateBlogMutation,
+    useDeleteBlogMutation,
+    useUpdateBlogMutation } = apiSlice;
