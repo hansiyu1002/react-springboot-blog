@@ -4,7 +4,7 @@ import BlogPreview from '../components/BlogPreview';
 import {useGetMyBlogsQuery} from '../services/apiSlice';
 
 function MyBlogs() {
-    const { data: res, isLoading, isError } = useGetMyBlogsQuery();
+    const { data: res, isLoading } = useGetMyBlogsQuery();
 
     if (isLoading) {
         return (
@@ -14,10 +14,10 @@ function MyBlogs() {
         );
     }
 
-    if (isError) {
+    if (res.success === false) {
         return (
             <div className="d-flex justify-content-center py-5">
-                <h1 className="text-center">An error has occurred</h1>
+                <h1 className="text-center">An error has occurred.</h1>
             </div>
         );
     }
@@ -25,7 +25,7 @@ function MyBlogs() {
     if (res.data.length === 0) {
         return (
             <div className="d-flex justify-content-center py-5">
-                <h1 className="text-center">You have no blog yet</h1>
+                <h1 className="text-center">You have no blog yet.</h1>
             </div>
         );
     }

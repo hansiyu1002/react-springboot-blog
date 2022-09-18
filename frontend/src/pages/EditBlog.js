@@ -28,7 +28,7 @@ function EditBlog() {
         e.preventDefault();
         const content = editor.getHTML();
         if(!title || !content) {
-            return alert("Title and content required");
+            return alert("Title and content required.");
         }
         updateBlog({ id, title, content })
     }
@@ -39,7 +39,7 @@ function EditBlog() {
         }, 500);
         return (
             <div className="d-flex justify-content-center py-5">
-                <h1 className="text-center">Update blog successfully</h1>
+                <h1 className="text-center">Update blog successfully.</h1>
             </div>
         );
     }
