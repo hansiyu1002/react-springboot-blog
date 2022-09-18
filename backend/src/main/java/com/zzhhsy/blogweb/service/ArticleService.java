@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface ArticleService {
     Result getArticleById(Long id);
     Result getMyArticles();
+    Result getHotArticles();
     Result postArticle(ArticleParam articleParam);
     Result updateArticle(Long id, ArticleParam articleParam);
     Result deleteArticle(Long id);

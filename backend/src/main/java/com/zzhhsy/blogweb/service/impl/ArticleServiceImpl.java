@@ -46,11 +46,22 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Result getHotArticles() {
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.orderByDesc(Article::getViewCount);
+        queryWrapper.last("limit 5");
+        List<Article> articles = articleMapper.selectList(queryWrapper);
+        List<ArticleVo> articleVos = copyList(articles);
+        return Result.success(articleVos);
+    }
+
+    @Override
     public Result postArticle(ArticleParam articleParam) {
         User user = UserThreadLocal.get();
         Article article = new Article();
         article.setTitle(articleParam.getTitle());
         article.setAuthorId(user.getId());
+        article.setViewCount(0);
         article.setCreateDate(System.currentTimeMillis());
         articleMapper.insert(article);
         ArticleContent articleContent = new ArticleContent();

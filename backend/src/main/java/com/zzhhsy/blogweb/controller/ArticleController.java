@@ -22,6 +22,11 @@ public class ArticleController {
         return articleService.getMyArticles();
     }
 
+    @GetMapping("/hot")
+    public Result getHotArticles() {
+        return articleService.getHotArticles();
+    }
+
     @PostMapping("/post")
     public Result postArticle(@RequestBody ArticleParam articleParam) {
         return articleService.postArticle(articleParam);
