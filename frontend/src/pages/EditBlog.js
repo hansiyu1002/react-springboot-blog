@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
-import {Button, Container, Form, Spinner} from "react-bootstrap";
+import {Button, Container, Form} from "react-bootstrap";
 import {useUpdateBlogMutation} from '../services/apiSlice';
-import { MenuBar } from '../components/MenuBar';
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useNavigate, useParams } from "react-router-dom";
 import {LinkContainer} from "react-router-bootstrap";
 import {useSelector} from "react-redux";
+import "./EditorContent.css"
 
 function EditBlog() {
     const { id } = useParams();
     const navigate = useNavigate();
-    const blogs = useSelector(state => state.blogs);
+    const blogs = useSelector(state => state.my_blogs);
     const blog = blogs.find(blog => blog.id === id);
     const [title, setTitle] = useState(blog.title);
     const editor = useEditor({
         extensions: [
             StarterKit,
         ],
+        injectCSS: false,
         content: `${blog.content}`,
         autofocus: true
     });
@@ -57,9 +58,7 @@ function EditBlog() {
                 </Form.Group>
                 <br/>
 
-                <div>
-                    <EditorContent editor={editor} />
-                </div>
+                <EditorContent editor={editor} />
 
                 <br/>
                 <Button variant="primary" type="submit">
