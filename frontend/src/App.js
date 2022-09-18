@@ -5,10 +5,11 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import NewBlog from './pages/NewBlog';
 import MyBlogs from './pages/MyBlogs';
-import SingleBlog from './pages/SingleBlog';
+import MyBlog from './pages/MyBlog';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer'
 import EditBlog from "./pages/EditBlog";
+import PublicBlog from "./pages/PublicBlog";
 
 
 function App() {
@@ -19,9 +20,10 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
+                <Route path="/public_blog/:id" element={<PublicBlog />} />
                 <Route path="/new_blog" element={<NewBlog />} />
                 <Route path="/my_blogs" element={<MyBlogs />} />
-                <Route path="/blog/:id" element={<SingleBlog />} />
+                <Route path="/my_blog/:id" element={<MyBlog />} />
                 <Route path="/edit_blog/:id" element={<EditBlog />} />
             </Routes>
             <Footer />

@@ -17,7 +17,7 @@ function BlogPreview({ blog }) {
                 <Card.Title>{title}</Card.Title>
                 <Card.Text dangerouslySetInnerHTML={{ __html: content?.substring(0, 100) + '...' }} />
                 <ButtonGroup>
-                    <LinkContainer to={`/blog/${id}`}>
+                    <LinkContainer to={`/my_blog/${id}`}>
                         <Button variant="primary">View</Button>
                     </LinkContainer>
                     <LinkContainer to={`/edit_blog/${id}`}>

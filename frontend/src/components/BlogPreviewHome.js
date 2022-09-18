@@ -11,7 +11,7 @@ function BlogPreviewHome({ blog }) {
         <Card style={{margin: "1rem"}}>
             <Card.Body>
                 <Card.Title>
-                    <LinkContainer to={`/blog/${id}`}>
+                    <LinkContainer to={`/public_blog/${id}`}>
                         <Nav.Link><u>{title}</u></Nav.Link>
                     </LinkContainer>
                 </Card.Title>
