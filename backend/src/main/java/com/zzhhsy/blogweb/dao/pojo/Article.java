@@ -9,5 +9,6 @@ public class Article {
     private Long id;
     private String title;
     private Long authorId;
+    private Integer viewCount;
     private Long createDate;
 }

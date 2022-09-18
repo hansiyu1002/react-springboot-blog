@@ -11,4 +11,5 @@ public class ArticleVo {
     private String title;
     private String author;
     private String content;
+    private Integer viewCount;
 }
