@@ -7,7 +7,7 @@ import {useSelector} from "react-redux";
 function SingleBlog() {
     const { id } = useParams();
     const user = useSelector(state => state.account.email);
-    const blogs = useSelector(state => state.blogs);
+    const blogs = useSelector(state => state.my_blogs);
     const blog = blogs.find(blog => blog.id === id);
 
     return (

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Container, Form } from "react-bootstrap";
 import { useCreateBlogMutation } from '../services/apiSlice';
-import { MenuBar } from '../components/MenuBar';
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useNavigate } from "react-router-dom";
