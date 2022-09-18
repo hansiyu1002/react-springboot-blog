@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import accountReducer from "./features/accountSlice"
-import blogsReducer from './features/blogsSlice';
+import hotBlogsReducer from "./features/hotBlogsSlice";
+import myBlogsReducer from './features/myBlogsSlice';
 import { apiSlice } from './services/apiSlice';
 import { persistStore, persistReducer,
     FLUSH,
@@ -14,7 +15,8 @@ import storage from 'redux-persist/lib/storage'
 
 const rootReducer = combineReducers({
     account: accountReducer,
-    blogs: blogsReducer,
+    my_blogs: myBlogsReducer,
+    hot_blogs: hotBlogsReducer,
     [apiSlice.reducerPath]: apiSlice.reducer
 });
 

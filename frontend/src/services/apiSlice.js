@@ -12,8 +12,8 @@ export const apiSlice = createApi({
             return headers;
         }
     }),
-    keepUnusedDataFor: 10,
-    tagTypes: ['Blogs'],
+    keepUnusedDataFor: 30,
+    tagTypes: ['my_blogs', 'hot_blogs'],
     endpoints: (builder) => ({
         loginUser: builder.mutation({
             query: (user) => ({
@@ -52,13 +52,13 @@ export const apiSlice = createApi({
             query: () => ({
                 url: '/article/hot'
             }),
-            providesTags: ['Blogs']
+            providesTags: ['hot_blogs']
         }),
         getMyBlogs: builder.query({
             query: () => ({
                 url: '/article/mine'
             }),
-            providesTags: ['Blogs']
+            providesTags: ['my_blogs']
         }),
         createBlog: builder.mutation({
             query: (blog) => ({
@@ -66,14 +66,14 @@ export const apiSlice = createApi({
                 method: 'POST',
                 body: blog
             }),
-            invalidatesTags: ['Blogs']
+            invalidatesTags: ['my_blogs', 'hot_blogs']
         }),
         deleteBlog: builder.mutation({
             query: (id) => ({
                 url: `/article/${id}`,
                 method: 'DELETE'
             }),
-            invalidatesTags: ['Blogs']
+            invalidatesTags: ['my_blogs', 'hot_blogs']
         }),
         updateBlog: builder.mutation({
             query: ({id, title, content}) => ({
@@ -81,7 +81,7 @@ export const apiSlice = createApi({
                 method: 'PATCH',
                 body: {title, content}
             }),
-            invalidatesTags: ['Blogs']
+            invalidatesTags: ['my_blogs', 'hot_blogs']
         })
     })
 });

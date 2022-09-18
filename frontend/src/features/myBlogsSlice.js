@@ -3,13 +3,10 @@ import { apiSlice } from "../services/apiSlice";
 
 const initialState = {}
 
-export const blogsSlice = createSlice({
-    name: 'blogs',
+export const myBlogsSlice = createSlice({
+    name: 'my_blogs',
     initialState,
     extraReducers: builder => {
-        builder.addMatcher(apiSlice.endpoints.getHotBlogs.matchFulfilled, (state, { payload }) => {
-            return payload.data;
-        });
         builder.addMatcher(apiSlice.endpoints.getMyBlogs.matchFulfilled, (state, { payload }) => {
             return payload.data;
         });
@@ -19,4 +16,4 @@ export const blogsSlice = createSlice({
     }
 })
 
-export default blogsSlice.reducer
+export default myBlogsSlice.reducer
