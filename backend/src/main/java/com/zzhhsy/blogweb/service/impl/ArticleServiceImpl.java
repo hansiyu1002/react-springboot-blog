@@ -8,6 +8,7 @@ import com.zzhhsy.blogweb.dao.pojo.ArticleContent;
 import com.zzhhsy.blogweb.dao.pojo.User;
 import com.zzhhsy.blogweb.service.ArticleService;
 import com.zzhhsy.blogweb.service.UserService;
+import com.zzhhsy.blogweb.service.async.AsyncService;
 import com.zzhhsy.blogweb.utils.UserThreadLocal;
 import com.zzhhsy.blogweb.vo.ArticleParam;
 import com.zzhhsy.blogweb.vo.ArticleVo;
@@ -27,6 +28,8 @@ public class ArticleServiceImpl implements ArticleService {
     ArticleContentMapper articleContentMapper;
     @Autowired
     private UserService userService;
+    @Autowired
+    private AsyncService asyncService;
 
     @Override
     public Result getArticleById(Long id) {
@@ -90,6 +93,14 @@ public class ArticleServiceImpl implements ArticleService {
         LambdaQueryWrapper<ArticleContent> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ArticleContent::getArticleId, id);
         articleContentMapper.delete(queryWrapper);
+        return Result.success(null);
+    }
+
+    @Override
+    public Result incrViewCount(Long id) {
+        Article article = articleMapper.selectById(id);
+        Integer viewCount = article.getViewCount();
+        asyncService.incrViewCount(id, viewCount);
         return Result.success(null);
     }
 

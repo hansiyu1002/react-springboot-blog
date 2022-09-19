@@ -41,4 +41,9 @@ public class ArticleController {
     public Result deleteArticle(@PathVariable("id") Long id) {
         return articleService.deleteArticle(id);
     }
+
+    @PatchMapping("/view_count/{id}")
+    public Result incrViewCount(@PathVariable("id") Long id) {
+        return articleService.incrViewCount(id);
+    }
 }

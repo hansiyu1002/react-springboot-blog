@@ -12,4 +12,5 @@ public interface ArticleService {
     Result postArticle(ArticleParam articleParam);
     Result updateArticle(Long id, ArticleParam articleParam);
     Result deleteArticle(Long id);
+    Result incrViewCount(Long id);
 }
