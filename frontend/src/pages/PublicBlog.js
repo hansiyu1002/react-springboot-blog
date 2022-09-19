@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { useParams } from 'react-router-dom';
-import {Container, Row, Col, Spinner} from "react-bootstrap";
+import {Container, Row, Col} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {useIncrViewCountMutation} from "../services/apiSlice";
 
