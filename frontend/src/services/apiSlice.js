@@ -38,18 +38,6 @@ export const apiSlice = createApi({
             }),
             invalidatesTags: ['Blogs']
         }),
-        //getOneBlog not used
-        getOneBlog: builder.query({
-            query: (id) => ({
-                url: `/article/${id}`
-            })
-        }),
-        // getAllBlogs not used
-        getAllBlogs: builder.query({
-            query: () => ({
-                url: '/article/all'
-            })
-        }),
         getHotBlogs: builder.query({
             query: () => ({
                 url: '/article/hot'
@@ -84,6 +72,14 @@ export const apiSlice = createApi({
                 body: {title, content}
             }),
             invalidatesTags: ['my_blogs', 'hot_blogs']
+        }),
+        incrViewCount: builder.mutation({
+            query: (id) => ({
+                url: `/article/view_count/${id}`,
+                method: 'PATCH',
+                body: {id}
+            }),
+            invalidatesTags: ['my_blogs', 'hot_blogs']
         })
     })
 });
@@ -96,4 +92,5 @@ export const {
     useGetMyBlogsQuery,
     useCreateBlogMutation,
     useDeleteBlogMutation,
-    useUpdateBlogMutation } = apiSlice;
+    useUpdateBlogMutation,
+    useIncrViewCountMutation } = apiSlice;

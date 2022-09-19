@@ -1,12 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useParams } from 'react-router-dom';
-import {Container, Row, Col} from "react-bootstrap";
+import {Container, Row, Col, Spinner} from "react-bootstrap";
 import {useSelector} from "react-redux";
+import {useIncrViewCountMutation} from "../services/apiSlice";
 
 function PublicBlog() {
     const { id } = useParams();
     const blogs = useSelector(state => state.hot_blogs);
     const blog = blogs.find(blog => blog.id === id);
+    const [incrViewCount] = useIncrViewCountMutation();
+
+    useEffect(() => {
+        incrViewCount(id);
+    }, []);
 
     return (
         <Container>
