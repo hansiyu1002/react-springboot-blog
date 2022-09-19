@@ -15,7 +15,7 @@ function BlogPreviewHome({ blog }) {
                         <Nav.Link><u>{title}</u></Nav.Link>
                     </LinkContainer>
                 </Card.Title>
-                <Card.Text dangerouslySetInnerHTML={{ __html: content?.substring(0, 300) + '...' }} />
+                <Card.Text dangerouslySetInnerHTML={{ __html: content?.substring(0, 200) + '...' }} />
                 <div className="text-muted text-right">
                     <span className="float-left">
                         {'By ' + author}
